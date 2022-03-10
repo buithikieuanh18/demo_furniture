@@ -21,6 +21,7 @@ use rmrevin\yii\fontawesome\FAS;
     <div class="card">
         <div class="card-body">
             <?php echo $form->errorSummary($model) ?>
+            
             <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
             <?php echo $form->field($model, 'slug')

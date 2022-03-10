@@ -15,7 +15,7 @@ class m220309_160705_quan_li_san_pham extends Migration
         $this->createTable('{{%san_pham}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(150)->notNull()->comment('Tên sản phẩm'),
-            'code' => $this->string(150)->comment('Slug'),
+            'slug' => $this->string(150)->comment('Slug'),
             'mo_ta_ngan_gon' => $this->string(500)->comment('Mô tả ngắn gọn sản phẩm'),
             'mo_ta_chi_tiet' => $this->text()->comment('Mô tả chi tiết'),
             'ban_chay' => $this->boolean()->notNull()->defaultValue(0)->comment('Bán chạy'),
@@ -55,7 +55,7 @@ class m220309_160705_quan_li_san_pham extends Migration
         $this->createTable('{{%phan_loai}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull()->comment('Tên danh mục sản phẩm'),
-            'code' => $this->string()->comment('Slug'),
+            'slug' => $this->string()->comment('Slug'),
         ]);
         // $this->addCommontOnColumn('{{%phan_loai}}', 'id', 'ID');
         // $this->addCommontOnColumn('{{%phan_loai}}', 'name', 'Tên danh mục sản phẩm');
@@ -70,7 +70,7 @@ class m220309_160705_quan_li_san_pham extends Migration
         $this->createTable('{{%tu_khoa}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(45)->notNull()->comment('Từ khóa'),
-            'code' => $this->string(45)->comment('Slug'),
+            'slug' => $this->string(45)->comment('Slug'),
         ]);
         // $this->addCommontOnColumn('{{%tu_khoa}}', 'id', 'ID');
         // $this->addCommontOnColumn('{{%tu_khoa}}', 'name', 'Từ khóa');
@@ -85,8 +85,9 @@ class m220309_160705_quan_li_san_pham extends Migration
         $this->createTable('{{%thuong_hieu}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(45)->notNull()->comment('Tên thương hiệu'),
-            'code' => $this->string()->comment('Slug'),
-            'logo' => $this->string(100)->notNull()->defaultValue('no-image.jpg')->comment('Logo'),
+            'slug' => $this->string()->comment('Slug'),
+            'logo_base_url' => $this->string(1024),
+            'logo_path' => $this->string(1024),
         ]);
         // $this->addCommontOnColumn('{{%thuong_hieu}}', 'id', 'ID');
         // $this->addCommontOnColumn('{{%thuong_hieu}}', 'name', 'Tên thương hiệu');
@@ -132,45 +133,6 @@ class m220309_160705_quan_li_san_pham extends Migration
      */
     public function safeDown()
     {
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'id');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'name');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'code');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'mo_ta_ngan_gon');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'mo_ta_chi_tiet');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'ban_chay');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'noi_bat');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'moi_ve');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'gia_ban');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'gia_canh_tranh');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'anh_dai_dien');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'ngay_dang');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'ngay_sua');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'thuong_hieu_id');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'nguoi_tao_id');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'nguoi_sua_id');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'so_luong');
-        // $this->dropCommentFromColumn('{{%san_pham}}', 'ngay_hang_ve');
-        
-        // $this->dropCommentFromColumn('{{%phan_loai}}', 'id', 'ID');
-        // $this->dropCommentFromColumn('{{%phan_loai}}', 'name', 'Tên danh mục sản phẩm');
-        // $this->dropCommentFromColumn('{{%phan_loai}}', 'code', 'Slug');
-
-        // $this->dropCommentFromColumn('{{%tu_khoa}}', 'id', 'ID');
-        // $this->dropCommentFromColumn('{{%tu_khoa}}', 'name', 'Từ khóa');
-        // $this->dropCommentFromColumn('{{%tu_khoa}}', 'code', 'Slug');
-
-        // $this->dropCommentFromColumn('{{%thuong_hieu}}', 'id', 'ID');
-        // $this->dropCommentFromColumn('{{%thuong_hieu}}', 'name', 'Tên thương hiệu');
-        // $this->dropCommentFromColumn('{{%thuong_hieu}}', 'code', 'Slug');
-        // $this->dropCommentFromColumn('{{%thuong_hieu}}', 'logo', 'Logo');
-
-        // $this->dropCommentFromColumn('{{%anh_san_pham}}', 'id', 'ID');
-        // $this->dropCommentFromColumn('{{%anh_san_pham}}', 'file', 'Đường dẫn file');
-        // $this->dropCommentFromColumn('{{%anh_san_pham}}', 'san_pham_id', 'Sản phẩm');
-
-        // $this->dropCommentFromColumn('{{%vai_tro_san_pham}}', 'id', 'ID');
-        // $this->dropCommentFromColumn('{{%vai_tro_san_pham}}', 'vai_tro', 'Vai trò');
-        // $this->dropCommentFromColumn('{{%vai_tro_san_pham}}', 'user_id', 'User');
 
         $this->dropForeignKey('fk_nguoi_tao_san_pham', '{{%san_pham}}');
         $this->dropForeignKey('fk_nguoi_sua_san_pham', '{{%san_pham}}');

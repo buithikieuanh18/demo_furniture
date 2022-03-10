@@ -250,6 +250,22 @@ $logEntries[] = [
                             ],
                         ],
                         [
+                            'label' => Yii::t('backend', 'Quản lý danh mục'),
+                            'icon' => FAS::icon('archive', ['class' => ['nav-icon']]),
+                            'url' => ['/phan-loai/index'],
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Quản lý sản phẩm'),
+                            'icon' => FAS::icon('braille', ['class' => ['nav-icon']]),
+                            'url' => ['/san-pham/index'],
+                        ],
+                        
+                        [
+                            'label' => Yii::t('backend', 'Thương hiệu'),
+                            'icon' => FAS::icon('bone', ['class' => ['nav-icon']]),
+                            'url' => ['/thuong-hieu/index'],
+                        ],
+                        [
                             'label' => Yii::t('backend', 'Widgets'),
                             'url' => '#',
                             'icon' => FAS::icon('puzzle-piece', ['class' => ['nav-icon']]),
