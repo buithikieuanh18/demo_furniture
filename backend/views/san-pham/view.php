@@ -5,11 +5,11 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var common\models\SanPham $model
+ * @var common\models\SanPhamForm $model
  */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'San Phams', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Sản phẩm', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="san-pham-view">
@@ -38,7 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'moi_ve',
                     'gia_ban',
                     'gia_canh_tranh',
-                    'anh_dai_dien',
+                    'anhdaidien_base_url:url',
+                    'anhdaidien_path',
                     'ngay_dang',
                     'ngay_sua',
                     'thuong_hieu_id',
