@@ -11,6 +11,8 @@ use Yii;
  * @property int $id
  * @property string $name Tên danh mục sản phẩm
  * @property string|null $slug Slug
+ * 
+ * @property PhanLoaiSanPham[] $phanLoaiSanPhams
  */
 class PhanLoaiForm extends PhanLoai
 {

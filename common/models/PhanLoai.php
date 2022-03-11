@@ -12,6 +12,8 @@ use Yii;
  * @property int $id
  * @property string $name Tên danh mục sản phẩm
  * @property string|null $slug Slug
+ * 
+ * @property PhanLoaiSanPham[] $phanLoaiSanPhams
  */
 class PhanLoai extends \yii\db\ActiveRecord
 {
@@ -54,5 +56,21 @@ class PhanLoai extends \yii\db\ActiveRecord
     {
         return new \common\models\query\PhanLoaiQuery(get_called_class());
     }
+    /**
+     * @return \yii\db\ActiveQuery
+     * Hàm liên kết giữa đối tượng phân loại sản phẩm và phân loại
+    */
 
+    public function getPhanLoaiSanPhams()
+    {
+        return $this->hasMany(PhanLoaiSanPham::class, ['phan_loai_id' => 'id']);
+        // id trường phân loại sẽ lk vs trường phan_loai_id của phân loại sản phẩm
+    }
+
+    public function beforeSave($insert)
+    {
+        // convert name => code
+        $this->code = API_Furniture::createCode($this->name);
+        return parent::beforeSave($insert);
+    }
 }
