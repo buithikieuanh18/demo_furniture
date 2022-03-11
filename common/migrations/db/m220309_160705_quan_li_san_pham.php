@@ -23,7 +23,9 @@ class m220309_160705_quan_li_san_pham extends Migration
             'moi_ve' => $this->boolean()->notNull()->defaultValue(0)->comment('Mới về'),
             'gia_ban' => $this->double()->notNull()->comment('Giá bán'),
             'gia_canh_tranh' => $this->double()->notNull()->comment('Giá cạnh tranh'),
-            'anh_dai_dien' => $this->string()->notNull()->comment('Ảnh đại diện'),
+            //'anh_dai_dien' => $this->string()->notNull()->comment('Ảnh đại diện'),
+            'anhdaidien_base_url' => $this->string(1024),
+            'anhdaidien_path' => $this->string(1024),
             'ngay_dang' => $this->dateTime()->comment('Ngày đăng'),
             'ngay_sua' => $this->dateTime()->comment('Ngày sửa'),
             'thuong_hieu_id' => $this->integer()->notNull()->comment('Thương hiệu'),
@@ -96,7 +98,12 @@ class m220309_160705_quan_li_san_pham extends Migration
 
         $this->createTable('{{%anh_san_pham}}', [
             'id' => $this->primaryKey(),
-            'file' => $this->string(100)->notNull()->comment('Tên file ảnh'),
+            //'file' => $this->string(100)->notNull()->comment('Tên file ảnh'),
+            'path' => $this->string()->notNull(),
+            'base_url' => $this->string(),
+            'type' => $this->string(),
+            'size' => $this->integer(),
+            'name' => $this->string(),
             'san_pham_id' => $this->integer()->notNull()->comment('Sản phẩm'),
         ]);
         // $this->addCommontOnColumn('{{%anh_san_pham}}', 'id', 'ID');
