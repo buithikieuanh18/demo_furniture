@@ -2,11 +2,11 @@
 
 /**
  * @var yii\web\View $this
- * @var common\models\SanPham $model
+ * @var common\models\SanPhamForm $model
  */
 
-$this->title = 'Update San Pham: ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'San Phams', 'url' => ['index']];
+$this->title = 'Cập nhật sản phẩm: ' . ' ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Sản phẩm', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

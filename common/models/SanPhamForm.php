@@ -2,9 +2,10 @@
 
 namespace common\models;
 
-use common\models\SanPham;
+use yii\db\Expression;
 use yii\behaviors\SluggableBehavior;
 use trntv\filekit\behaviors\UploadBehavior;
+
 use Yii;
 
 /**
@@ -20,7 +21,8 @@ use Yii;
  * @property int $moi_ve Mới về
  * @property float $gia_ban Giá bán
  * @property float $gia_canh_tranh Giá cạnh tranh
- * @property string $anh_dai_dien Ảnh đại diện
+ * @property string $anhdaidien_base_url
+ * @property string $anhdaidien_path
  * @property string|null $ngay_dang Ngày đăng
  * @property string|null $ngay_sua Ngày sửa
  * @property int $thuong_hieu_id Thương hiệu
@@ -40,16 +42,74 @@ class SanPhamForm extends SanPham
             'slug' => [
                 'class' => SluggableBehavior::class,
                 'attribute' => 'name',
-                'ensureUnique' => true,
-                'immutable' => true
+                'immutable' => true,
             ],
             [
                 'class' => UploadBehavior::class,
-                'attribute' => 'thumbnail',
-                'pathAttribute' => 'logo_path',
-                'baseUrlAttribute' => 'logo_base_url',
+                'attribute' => 'attachments',
+                'multiple' => true,
+                'uploadRelation' => 'anhSanPhams',
+                'pathAttribute' => 'path',
+                'baseUrlAttribute' => 'base_url',
+                'typeAttribute' => 'type',
+                'sizeAttribute' => 'size',
+                'nameAttribute' => 'name',
+            ],
+            [
+                'class' => UploadBehavior::class,
+                'attribute' => 'anh_dai_dien',
+                'pathAttribute' => 'anhdaidien_path',
+                'baseUrlAttribute' => 'anhdaidien_base_url',
             ],
         ];
     }
+    public function beforeSave($insert)
+    {
+        if($insert){
+            $this->ngay_dang = new Expression("NOW()");
+            $this->nguoi_tao_id = Yii::$app->user->id;
+        }else {
+                $this->ngay_sua = new Expression("NOW()");
+                $this->nguoi_tao_id = Yii::$app->user->id;
+            }
+        $this->ngay_hang_ve = API_Furniture::convertDMYtoYMD($this->ngay_hang_ve);
+        $this->nguoi_sua_id = 1;
+        #endregion
+        return parent::beforeSave($insert);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        PhanLoaiSanPham::deleteAll(['san_pham_id' => $this->id]);
+        foreach ($this->phan_loai_san_phams as $phan_loai_san_pham) {
+            $plsp = new PhanLoaiSanPham();
+            $plsp->phan_loai_id = $phan_loai_san_pham;
+            $plsp->san_pham_id = $this->id;
+            $plsp->save();
+        }
+        $this->nguoi_tao_id = Yii::$app->user->id;
+
+        parent::afterSave($insert, $changedAttributes);
+    }
+    // /**
+    //  * @inheritdoc
+    //  */
+    // public function behaviors()
+    // {
+    //     return [
+    //         'slug' => [
+    //             'class' => SluggableBehavior::class,
+    //             'attribute' => 'name',
+    //             'ensureUnique' => true,
+    //             'immutable' => true
+    //         ],
+    //         [
+    //             'class' => UploadBehavior::class,
+    //             'attribute' => 'thumbnail',
+    //             'pathAttribute' => 'logo_path',
+    //             'baseUrlAttribute' => 'logo_base_url',
+    //         ],
+    //     ];
+    // }
     
 }

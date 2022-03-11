@@ -27,7 +27,8 @@ use yii\bootstrap4\ActiveForm;
     <?php // echo $form->field($model, 'moi_ve') ?>
     <?php // echo $form->field($model, 'gia_ban') ?>
     <?php // echo $form->field($model, 'gia_canh_tranh') ?>
-    <?php // echo $form->field($model, 'anh_dai_dien') ?>
+    <?php // echo $form->field($model, 'anhdaidien_base_url') ?>
+    <?php // echo $form->field($model, 'anhdaidien_path') ?>
     <?php // echo $form->field($model, 'ngay_dang') ?>
     <?php // echo $form->field($model, 'ngay_sua') ?>
     <?php // echo $form->field($model, 'thuong_hieu_id') ?>

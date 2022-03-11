@@ -3,9 +3,9 @@
 namespace common\models\query;
 
 /**
- * This is the ActiveQuery class for [[\common\models\SanPham]].
+ * This is the ActiveQuery class for [[\common\models\SanPhamForm]].
  *
- * @see \common\models\SanPham
+ * @see \common\models\SanPhamForm
  */
 class SanPhamQuery extends \yii\db\ActiveQuery
 {
@@ -16,7 +16,7 @@ class SanPhamQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return \common\models\SanPham[]|array
+     * @return \common\models\SanPhamForm[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class SanPhamQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return \common\models\SanPham|array|null
+     * @return \common\models\SanPhamForm|array|null
      */
     public function one($db = null)
     {

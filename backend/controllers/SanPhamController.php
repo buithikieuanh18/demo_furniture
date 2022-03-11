@@ -8,12 +8,17 @@ use common\models\search\SanPhamSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\PhanLoaiSanPham;
+use yii\helpers\ArrayHelper;
+
+use common\traits\FormAjaxValidationTrait;
 
 /**
  * SanPhamController implements the CRUD actions for SanPhamForm model.
  */
 class SanPhamController extends Controller
 {
+    use FormAjaxValidationTrait;
 
     /** @inheritdoc */
     public function behaviors()
@@ -63,6 +68,7 @@ class SanPhamController extends Controller
     public function actionCreate()
     {
         $model = new SanPhamForm();
+        $this->performAjaxValidation($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -81,10 +87,13 @@ class SanPhamController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $this->performAjaxValidation($model);
+        $model->phan_loai_san_phams = ArrayHelper::map(PhanLoaiSanPham::findAll(['san_pham_id' => $id]), 'phan_loai_id', 'phan_loai_id');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -104,7 +113,7 @@ class SanPhamController extends Controller
     }
 
     /**
-     * Finds the SanPhamForm model based on its primary key value.
+     * Finds the SanPham model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
      * @return SanPhamForm the loaded model
