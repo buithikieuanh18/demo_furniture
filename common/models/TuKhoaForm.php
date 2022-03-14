@@ -30,4 +30,10 @@ class TuKhoaForm extends TuKhoa
             ]
         ];
     }
+
+    // public function beforeSave($insert)
+    // {
+    //     $this->slug = API_Furniture::createCode($this->name);
+    //     return parent::beforeSave($insert);
+    // }
 }

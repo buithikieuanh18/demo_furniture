@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\PhanLoaiForm;
 use Yii;
 use common\models\SanPhamForm;
 use common\models\search\SanPhamSearch;
@@ -41,12 +42,14 @@ class SanPhamController extends Controller
      */
     public function actionIndex()
     {
+        $searchPhanLoai = new PhanLoaiForm();
         $searchModel = new SanPhamSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'searchPhanLoai' => $searchPhanLoai,
         ]);
     }
 

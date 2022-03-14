@@ -7,6 +7,7 @@ use yii\behaviors\SluggableBehavior;
 use trntv\filekit\behaviors\UploadBehavior;
 
 use Yii;
+use yii\helpers\VarDumper;
 
 /**
  * This is the model class for table "san_pham".
@@ -65,6 +66,8 @@ class SanPhamForm extends SanPham
     }
     public function beforeSave($insert)
     {
+        // VarDumper::dump($this->tu_khoa_san_phams, 10, true);
+        // exit;
         if($insert){
             $this->ngay_dang = new Expression("NOW()");
             $this->nguoi_tao_id = Yii::$app->user->id;
@@ -94,16 +97,16 @@ class SanPhamForm extends SanPham
             $tukhoa = explode(',', $this->tu_khoa_san_phams);
             foreach ($tukhoa as $item) {
                 $old_tag = TuKhoaForm::findOne(['name' => trim($item)]);
-                if(!is_null($old_tag)) {
-                    $is_tukhoa = $old_tag->id;
-                } else {
+                if(!is_null($old_tag))
+                    $id_tukhoa = $old_tag->id;
+                else {
                     $new_tag = new TuKhoaForm();
                     $new_tag->name = $item;
                     $new_tag->save();
                     $id_tukhoa = $new_tag->id;
                 }
                 $tukhoa_sp = new TuKhoaSanPham();
-                $id_tukhoa = $tukhoa_sp->tu_khoa_id;
+                $tukhoa_sp->tu_khoa_id = $id_tukhoa;
                 $tukhoa_sp->san_pham_id = $this->id;
                 $tukhoa_sp->save();
             }

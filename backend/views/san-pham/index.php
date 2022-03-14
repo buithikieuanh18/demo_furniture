@@ -79,8 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'headerOptions' => ['class' => 'text-right'],
                         'contentOptions' => ['class' => 'text-right'],
-                        'filter' => Html::activeTextInput($searchModel, 'giaban_tu', ['class' => 'form-control', 'type' => 'number']).
-                        Html::activeTextInput($searchModel, 'gia_ban', ['class' => 'form-control', 'type' => 'number']),
+                        //'filter' => Html::activeTextInput($searchModel, 'giaban_tu', ['class' => 'form-control', 'type' => 'number']).
+                        //Html::activeTextInput($searchModel, 'gia_ban', ['class' => 'form-control', 'type' => 'number']),
                     ],
 
                     [
@@ -133,6 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             1 => 'Mới về'
                         ], ['prompt' => 'Tất cả', 'class' => 'form-control'])
                     ],
+
                     // 'gia_ban',
                     // 'gia_canh_tranh',
                     // 'anhdaidien_base_url:url',
@@ -155,9 +156,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'thuong_hieu_id',
                         'options' => ['style' => 'width: 10%'],
-                        // 'value' => function ($model) {
-                        //     return $model->thuonghieu ? $model->thuonghieu->title : null;
-                        // },
                         'value' => function($data) {
                             /** @var \common\models\SanPhamForm $data  */
                             $thuongHieu = \common\models\ThuongHieuForm::findOne($data->thuong_hieu_id);
@@ -165,6 +163,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'filter' => ArrayHelper::map(\common\models\ThuongHieuForm::find()->all(), 'id', 'name'),
                     ],
+
+                    // [
+                    //     'value' => function($data) {
+                    //         /** @var \common\models\SanPhamForm  $data */
+                    //         $phanLoai = [];
+                    //         //$phanloai = \common\models\PhanLoaiForm::findOne($data->id);
+                    //         foreach ($data->phanLoaiSanPhams as $phanLoaiSanPham) {
+                    //             $phanLoai[] = $phanLoaiSanPham->name;
+                    //         }
+                    //         return implode(', ', $phanLoai);
+                    //     }
+                    // ],
                     // 'nguoi_tao_id',
                     // [
                     //     'attribute' => 'nguoi_tao_id',

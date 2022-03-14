@@ -32,6 +32,7 @@ use Yii;
  * @property ThuongHieuForm     $thuonghieu
  * @property AnhSanPham[] $anhSanPhams
  * @property PhanLoaiSanPham[] $phanLoaiSanPhams
+ * @property TuKhoaSanPham[] $tuKhoaSanPhams
  */
 // $anh_dai_dien Ảnh đại diện
 class SanPham extends \yii\db\ActiveRecord
@@ -158,5 +159,21 @@ class SanPham extends \yii\db\ActiveRecord
     public function getAnhSanPhams()
     {
         return $this->hasMany(AnhSanPham::class, ['san_pham_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTuKhoaSanPhams()
+    {
+        return $this->hasMany(TuKhoaSanPham::class, ['san_pham_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhanLoaiSanPhams()
+    {
+        return $this->hasMany(PhanLoaiSanPham::class, ['san_pham_id' => 'id']);
     }
 }
