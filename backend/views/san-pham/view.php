@@ -40,6 +40,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     'gia_canh_tranh',
                     'anhdaidien_base_url:url',
                     'anhdaidien_path',
+                    [
+                        'attribute' => 'anh_dai_dien',
+                        'value' => function($data) {
+                            /** @var $data \common\models\SanPhamForm  */
+                            return Html::img($data->anhdaidien_base_url.'/'.$data->anhdaidien_path, ['width' => '120px', 'height' => '80px']);
+                        },
+                        'format' => 'raw',
+                        'filter' => false,
+                        'headerOptions' => ['class' => 'text-center'],
+                        'contentOptions' => ['class' => 'text-center'],
+                    ],
+                    // [
+                    //     'attribute' => 'attachments',
+                    //     'value' => function($data) {
+                    //         /** @var \common\models\SanPhamForm $data */
+                    //         return Html::img($data->base_url.'/'.$data->path, ['width' => '120px', 'height' => '80px']);
+                    //     },
+                    //     'format' => 'raw',
+                    //     'filter' => false,
+                    //     'headerOptions' => ['class' => 'text-center'],
+                    //     'contentOptions' => ['class' => 'text-center'],
+                    // ],
                     'ngay_dang',
                     'ngay_sua',
                     'thuong_hieu_id',

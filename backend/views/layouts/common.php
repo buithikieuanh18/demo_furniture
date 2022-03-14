@@ -266,6 +266,11 @@ $logEntries[] = [
                             'url' => ['/thuong-hieu/index'],
                         ],
                         [
+                            'label' => Yii::t('backend', 'Từ khóa'),
+                            'icon' => FAS::icon('book', ['class' => ['nav-icon']]),
+                            'url' => ['/tu-khoa/index'],
+                        ],
+                        [
                             'label' => Yii::t('backend', 'Widgets'),
                             'url' => '#',
                             'icon' => FAS::icon('puzzle-piece', ['class' => ['nav-icon']]),

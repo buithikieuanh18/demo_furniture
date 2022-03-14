@@ -3,22 +3,18 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\SanPhamForm;
-use common\models\search\SanPhamSearch;
+use common\models\TuKhoaForm;
+use common\models\search\TuKhoaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\models\PhanLoaiSanPham;
-use common\models\TuKhoaForm;
-use common\models\TuKhoaSanPham;
-use yii\helpers\ArrayHelper;
-
 use common\traits\FormAjaxValidationTrait;
+use yii\web\Response;
 
 /**
- * SanPhamController implements the CRUD actions for SanPhamForm model.
+ * TuKhoaController implements the CRUD actions for TuKhoaForm model.
  */
-class SanPhamController extends Controller
+class TuKhoaController extends Controller
 {
     use FormAjaxValidationTrait;
 
@@ -36,22 +32,29 @@ class SanPhamController extends Controller
     }
 
     /**
-     * Lists all SanPhamForm models.
+     * Lists all TuKhoaForm models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SanPhamSearch();
+        $tukhoa = new TuKhoaForm();
+        $this->performAjaxValidation($tukhoa);
+        if ($tukhoa->load(Yii::$app->request->post()) && $tukhoa->save()) {
+            return $this->redirect(['index']);
+        }
+
+        $searchModel = new TuKhoaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $tukhoa,
         ]);
     }
 
     /**
-     * Displays a single SanPhamForm model.
+     * Displays a single TuKhoaForm model.
      * @param int $id ID
      * @return mixed
      */
@@ -63,13 +66,13 @@ class SanPhamController extends Controller
     }
 
     /**
-     * Creates a new SanPhamForm model.
+     * Creates a new TuKhoaForm model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new SanPhamForm();
+        $model = new TuKhoaForm();
         $this->performAjaxValidation($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -81,7 +84,7 @@ class SanPhamController extends Controller
     }
 
     /**
-     * Updates an existing SanPhamForm model.
+     * Updates an existing TuKhoaForm model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return mixed
@@ -90,28 +93,17 @@ class SanPhamController extends Controller
     {
         $model = $this->findModel($id);
         $this->performAjaxValidation($model);
-        $model->phan_loai_san_phams = ArrayHelper::map(PhanLoaiSanPham::findAll(['san_pham_id' => $id]), 'phan_loai_id', 'phan_loai_id');
-
-        //$tukhoa_sanpham = ArrayHelper::map(TuKhoaSanPham::findAll(['san_pham_id' => $id]), 'tu_khoa_id', 'tu_khoa_id');
-        $tukhoa_sanpham = TuKhoaSanPham::findAll(['san_pham_id' => $id]);
-        $model->tu_khoa_san_phams = [];
-        foreach($tukhoa_sanpham as $item) {
-            $tukhoa = TuKhoaForm::findOne($item->tu_khoa_id);
-            $model->tu_khoa_san_phams[] = $tukhoa->name; //$tukhoa->name;
-        }
-        $model->tu_khoa_san_phams = implode(',', $model->tu_khoa_san_phams);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Deletes an existing SanPhamForm model.
+     * Deletes an existing TuKhoaForm model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return mixed
@@ -124,17 +116,34 @@ class SanPhamController extends Controller
     }
 
     /**
-     * Finds the SanPham model based on its primary key value.
+     * Finds the TuKhoaForm model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return SanPhamForm the loaded model
+     * @return TuKhoaForm the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = SanPhamForm::findOne($id)) !== null) {
+        if (($model = TuKhoaForm::findOne($id)) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionList($query)
+    {
+        $models = TuKhoaForm::find()
+        ->andFilterWhere(['LIKE', 'name', $query])
+        ->all(); //tao danh sach doi tuong
+        $items = [];
+        /** @var TuKhoaForm $model */
+        foreach ($models as $model) {
+            $items[] = ['name' => $model->name];
+        }
+        // We know we can use ContentNegotiator filter
+        // this way is easier to show you here :)
+        Yii::$app->response->format = Response::FORMAT_JSON;
+    
+        return $items;
     }
 }

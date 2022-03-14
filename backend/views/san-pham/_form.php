@@ -6,6 +6,7 @@ use trntv\filekit\widget\Upload;
 use kartik\datetime\DateTimePicker;
 use yii\web\JsExpression;
 use rmrevin\yii\fontawesome\FAS;
+use dosamigos\selectize\SelectizeTextInput;
 
 use yii\helpers\ArrayHelper;
 
@@ -97,7 +98,7 @@ use yii\helpers\ArrayHelper;
                     ]
                 ) ?>
 
-                <?=$form->field($model, 'phan_loai_san_phams')->checkboxList( ArrayHelper::map( 
+                <?=$form->field($model, 'phan_loai_san_phams')->inline()->checkboxList(ArrayHelper::map( 
                     \common\models\PhanLoaiForm::find()->all(),'id','name')) ?>
                 <?php //echo $form->field($model, 'ngay_dang')->textInput() ?>
 
@@ -110,6 +111,19 @@ use yii\helpers\ArrayHelper;
                 'name'
                 ), ['prompt' => '']) ?>
 
+                <?= $form->field($model, 'tu_khoa_san_phams')->widget(SelectizeTextInput::class, [
+                    // calls an action that returns a JSON object with matched
+                    // tags
+                    'loadUrl' => ['tu-khoa/list'],
+                    'options' => ['class' => 'form-control'],
+                    'clientOptions' => [
+                        'plugins' => ['remove_button'],
+                        'valueField' => 'name',
+                        'labelField' => 'name',
+                        'searchField' => ['name'],
+                        'create' => true,
+                    ],
+                ])->hint('Mỗi từ khóa cách nhau một dấu phẩy.') ?>
                 <?php //echo $form->field($model, 'nguoi_tao_id')->textInput() ?>
                 <?php //echo $form->field($model, 'nguoi_sua_id')->textInput() ?>
                 

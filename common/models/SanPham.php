@@ -39,6 +39,8 @@ class SanPham extends \yii\db\ActiveRecord
     public $phan_loai_san_phams;
     public $ngay_dang_tu;
     public $giaban_tu;
+    public $tu_khoa_san_phams;
+    
     /**
      * @var array
      */
@@ -75,9 +77,10 @@ class SanPham extends \yii\db\ActiveRecord
             [['ngay_dang', 'ngay_sua', 'ngay_hang_ve', 'anh_dai_dien'], 'safe'],
             [['name', 'slug'], 'string', 'max' => 150],
             [['mo_ta_ngan_gon'], 'string', 'max' => 500],
-            [['attachments', 'phan_loai_san_phams'], 'safe'],
+            [['attachments', 'phan_loai_san_phams', 'tu_khoa_san_phams'], 'safe'],
             [['anhdaidien_base_url', 'anhdaidien_path'], 'string', 'max' => 1024],
             [['thuong_hieu_id'], 'exist', 'targetClass' => ThuongHieuForm::class, 'targetAttribute' => 'id'],
+            //[['base_url', 'path'], 'string', 'max' => 1024],
             // [['ngay_dang', 'ngay_sua'], 'default', 'value' => function () {
             //     return date(DATE_ISO8601);
             // }],
@@ -112,6 +115,7 @@ class SanPham extends \yii\db\ActiveRecord
             'so_luong' => 'Số lượng',
             'ngay_hang_ve' => 'Ngày hàng về',
             'phan_loai_san_phams' => 'Phân loại sản phẩm',
+            'tu_khoa_san_phams' => 'Từ khóa sản phẩm',
         ];
     }
 

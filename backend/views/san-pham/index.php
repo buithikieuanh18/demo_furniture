@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     [
                         'attribute' => 'id',
-                        'options' => ['style' => 'width: 5%'],
+                        'options' => ['style' => 'width: 10%'],
                     ],
                     
                     [
